@@ -2,7 +2,7 @@
     "name": "node_js",
     "version": "1.0.0",
     "description": "E-Commerce Website - The Gift Shop",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "lint": "eslint",
         "check-lint": "lint [0-9]*.js",
