@@ -1,1 +1,7 @@
-node_modules
+# Ignore virtual environment directory
+.venv/
+
+# Ignore other common files and directories
+node_modules/
+.DS_Store
+.env

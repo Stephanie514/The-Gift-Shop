@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// Update import to use Routes instead of Switch
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import Products from './components/Products'; 
@@ -11,12 +12,14 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/products" component={Products} />
-          <Route path="/navbar" component={Navbar} />
-          <Route path="/footer" component={Footer} />
-        </Switch>
+        {/* Replace Switch with Routes */}
+        <Routes>
+          {/* Update Route syntax to use element prop */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/footer" element={<Footer />} />
+        </Routes>
         <Footer />
       </div>
     </Router>
