@@ -7,11 +7,17 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setToken } = useContext(AuthContext);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { token } = await signup(username, email, password);
-    setToken(token);
+    try {
+      const { token } = await signup(username, email, password);
+      setToken(token);
+      setError('');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -23,21 +29,25 @@ const Signup = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          required
         />
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          required
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          required
         />
         <button type="submit">Signup</button>
       </form>
+      {error && <p>{error}</p>}
     </div>
   );
 };

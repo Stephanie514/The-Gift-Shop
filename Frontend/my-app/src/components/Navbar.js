@@ -1,25 +1,23 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    setToken(null);
+    // Optionally, remove the token from localStorage or cookie if you use them
+  };
 
   return (
     <nav>
-      <Link to="/">Home</Link>
-      {token ? (
-        <>
-          <Link to="/cart">Cart</Link>
-          <Link to="/checkout">Checkout</Link>
-          <Link to="/logout">Logout</Link>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </>
-      )}
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        {!token && <li><Link to="/login">Login</Link></li>}
+        {!token && <li><Link to="/signup">Signup</Link></li>}
+        {token && <li><button onClick={handleLogout}>Logout</button></li>}
+      </ul>
     </nav>
   );
 };
