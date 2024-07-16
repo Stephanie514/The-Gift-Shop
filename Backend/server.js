@@ -31,6 +31,10 @@ mongoose.connect(uri, {
     console.error('MongoDB connection error:', err.message);
 });
 
+// Import and use product routes
+const productRoutes = require('./routes/products'); // Imports product routes
+app.use('/api/products', productRoutes); // Uses product routes
+
 // Add a route handler for the root URL
 app.get('/', (req, res) => {
   res.send('Server is running!');
