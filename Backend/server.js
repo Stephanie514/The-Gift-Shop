@@ -31,6 +31,18 @@ app.use('/api/mpesa', require('./routes/mpesa'));
 app.use('/api/paypal', require('./routes/paypal'));
 app.use('/api/stripe', require('./routes/stripe'));
 
+// Connect to MongoDB
+const uri = process.env.MONGO_URI;
+mongoose.set('strictQuery', false);
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('MongoDB connected...');
+}).catch(err => {
+    console.error('MongoDB connection error:', err.message);
+});
+
 // Add a route handler for the root URL
 app.get('/', (req, res) => {
   res.send('Server is running!');
