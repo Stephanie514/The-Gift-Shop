@@ -11,21 +11,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Connect to MongoDB using the direct URL
-// const mongoURI = 'mongodb+srv://Stephanie:Steph@thegiftshop.5rs0434.mongodb.net/'
-
-// mongoose.connect(mongoURI, {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-// });
-
-// mongoose.connect('mongodb+srv://Stephanie:Steph@thegiftshop.5rs0434.mongodb.net/', {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-// })
- // .then(() => console.log('MongoDB connected'))
- // .catch(err => console.error(err)); 
-
 // Connect to MongoDB
 const uri = process.env.MONGO_URI;
 mongoose.set('strictQuery', false);
