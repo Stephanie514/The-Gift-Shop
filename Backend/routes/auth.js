@@ -74,4 +74,10 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// Logout Route
+router.post('/logout', (req, res) => {
+  // This is mainly for the client side to clear the token.
+  res.status(200).send('User logged out');
+});
+
 module.exports = router;

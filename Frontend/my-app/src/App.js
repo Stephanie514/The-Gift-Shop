@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Auth from './components/Auth';
+import Contact from './components/Contact';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import './App.css';
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/contact" element={<Contact />} /> {/* Add the contact route */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

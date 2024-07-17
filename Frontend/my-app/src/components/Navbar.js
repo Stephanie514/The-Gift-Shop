@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import '../styles.css'; // Import your CSS file for Navbar styling
 
 const Navbar = () => {
   const { token, setToken } = useContext(AuthContext);
@@ -11,12 +12,26 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        {!token && <li><Link to="/login">Login</Link></li>}
-        {!token && <li><Link to="/signup">Signup</Link></li>}
-        {token && <li><button onClick={handleLogout}>Logout</button></li>}
+    <nav className="navbar">
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link to="/" className="nav-link">Home</Link>
+        </li>
+        {!token && (
+          <>
+            <li className="nav-item">
+              <Link to="/login" className="nav-link">Login</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/signup" className="nav-link">Signup</Link>
+            </li>
+          </>
+        )}
+        {token && (
+          <li className="nav-item">
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
+          </li>
+        )}
       </ul>
     </nav>
   );

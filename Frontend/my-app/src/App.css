@@ -36,23 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* src/App.css */
-.shopping-cart {
-  width: 80%;
-  margin: 0 auto;
-}
-
-.shopping-cart h2 {
-  text-align: center;
-}
-
-.shopping-cart div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.shopping-cart button {
-  margin: 0 5px;
-}

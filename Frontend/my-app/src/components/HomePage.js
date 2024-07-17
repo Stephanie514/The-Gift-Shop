@@ -1,14 +1,25 @@
+// HomePage.js
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaGift } from 'react-icons/fa';
+import '../styles.css';
 
-const Homepage = () => {
+const HomePage = () => {
   return (
     <div className="homepage">
       <h1>Welcome to The Gift Shop</h1>
+      <div className="button-container">
+      </div>
+      <FaGift size={50} color="#007bff" className="icon" />
       <p>
-        Explore our wide range of gifts and find the perfect one for any occasion.
+        Find the perfect gift for your loved ones. Browse through our wide selection of products and enjoy a seamless shopping experience.
       </p>
-      {/* Add more content as needed */}
+      <div className="buttons">
+        <button className="button"><Link to="/products" style={{color: 'white', textDecoration: 'none'}}>Shop Now</Link></button>
+        <button className="button"><Link to="/contact" style={{color: 'white', textDecoration: 'none'}}>Contact Us</Link></button>
+      </div>
     </div>
   );
 };
-export default Homepage;
+
+export default HomePage;

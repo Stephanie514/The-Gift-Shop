@@ -1,0 +1,139 @@
+/* styles.css or styles.scss */
+body {
+    font-family: 'Arial, sans-serif';
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .homepage {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .homepage h1 {
+    color: #333;
+    font-size: 3rem;
+  }
+  
+  .homepage p {
+    color: #666;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .homepage .buttons {
+    margin-top: 30px;
+  }
+  
+  .homepage button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  .homepage button:hover {
+    background-color: #0056b3;
+  }  
+
+  /* Contact.css */
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.form-container textarea {
+  height: 100px;
+}
+
+.form-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Navbar.css */
+
+.navbar {
+  background-color: #007bff; /* Navbar background color */
+  padding: 10px; /* Padding around the navbar */
+  display: flex; /* Ensure flexbox layout */
+  justify-content: center; /* Center items horizontally */
+}
+
+.navbar-nav {
+  list-style-type: none; /* Remove default list styles */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Display navbar items horizontally */
+}
+
+.nav-item {
+  margin-right: 10px; /* Adjust spacing between navbar items */
+}
+
+.nav-link, .logout-btn {
+  color: #ffffff; /* Text color for links and buttons */
+  text-decoration: none; /* Remove underline from links */
+  padding: 10px 15px; /* Padding inside links and buttons */
+  border: none; /* Remove default button border */
+  background-color: transparent; /* Transparent background for links */
+  cursor: pointer; /* Cursor style */
+  font-size: 16px; /* Font size */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.nav-link:hover, .logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background on hover */
+  border-radius: 4px; /* Rounded corners on hover */
+}
