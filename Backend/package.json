@@ -21,6 +21,8 @@
     "stripe": "^8.174.0"
   },
   "devDependencies": {
+    "eslint": "^9.7.0",
+    "eslint-plugin-node": "^11.1.0",
     "nodemon": "^2.0.13"
   },
   "author": "",
