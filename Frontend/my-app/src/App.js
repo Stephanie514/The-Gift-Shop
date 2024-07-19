@@ -8,6 +8,8 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Auth from './components/Auth';
 import Contact from './components/Contact';
+import ProductDetail from './components/ProductDetail';
+import ProductList from './components/ProductList';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import './App.css';
 
@@ -24,6 +26,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProtectedRoute element={<Products />} />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/products/:id" element={<ProductList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />
