@@ -13,7 +13,8 @@ const Signup = () => {
     try {
       const data = await signup(username, email, password);
       localStorage.setItem('token', data.token);
-      navigate('/products'); // Redirect to products page
+      alert('Signup successful! Please log in.');
+      navigate('/login'); // Redirect to login after successful signup
     } catch (error) {
       console.error('Signup error:', error.message);
       alert('Signup failed. Please try again.');

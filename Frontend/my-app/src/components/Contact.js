@@ -48,7 +48,7 @@ const Contact = () => {
         </div>
         <button type="submit">Send</button>
       </form>
-      <p>Email: support@thegiftshop.com</p>
+      <p>Email: thegiftshop401@gmail.com</p>
       <p>Phone: +25492022972 +254715124162</p>
     </div>
   );

@@ -61,69 +61,19 @@ router.post('/signup', [
   }
 });
 
-router.post('/login', [
-  body('email').isEmail().withMessage('Email is invalid'),
-  body('password').exists().withMessage('Password is required'),
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
+// Login Route
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     let user = await User.findOne({ email });
     if (!user) {
+      console.error('User not found:', email);
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
-    }
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// Login route
-router.post('/login', [
-  body('email').isEmail().withMessage('Email is invalid'),
-  body('password').exists().withMessage('Password is required'),
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { email, password } = req.body;
-
-  try {
-    let user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+      console.error('Password mismatch for user:', email);
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
@@ -135,16 +85,19 @@ router.post('/login', [
 
     jwt.sign(
       payload,
-      process.env.JWT_SECRET, // Use environment variable for JWT secret
+      process.env.JWT_SECRET,
       { expiresIn: '1h' },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error('Error generating token:', err);
+          throw err;
+        }
         res.json({ token });
       }
     );
   } catch (err) {
-    console.error(err.message);
-    return res.status(500).send('Server error');
+    console.error('Server error:', err.message, err.stack);
+    res.status(500).send('Server error');
   }
 });
 
