@@ -1,8 +1,11 @@
+// src/App.js
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
-import Products from './components/Products';
+import ProductList from './components/ProductList'; // Import the ProductList component
+import ProductDetail from './components/ProductDetail'; // Import the new component
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -23,7 +26,8 @@ const App = () => (
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProtectedRoute element={<Products />} />} />
+          <Route path="/products" element={<ProductList />} /> {/* Allow access to ProductList without auth */}
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />

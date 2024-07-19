@@ -1,0 +1,74 @@
+// src/components/ProductDetail.js
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import defaultThumbnail from '../assets/default-thumbnail.png'; // Ensure you have this image in your assets folder
+
+const ProductDetail = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+        setProduct(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div className="product-detail">
+      {product ? (
+        <>
+          <h1>{product.name}</h1>
+          <img
+            src={product.thumbnail || defaultThumbnail} // Use default image if no thumbnail
+            alt={product.name}
+            className="product-thumbnail"
+          />
+          <p>{product.description}</p>
+          <p>Price: ${product.price}</p>
+          <p>Category: {product.category}</p>
+          <div className="additional-photos">
+            {product.images && product.images.length > 0 && (
+              product.images.map((photo, index) => (
+                <img key={index} src={photo} alt={`Additional view ${index + 1}`} className="additional-photo" />
+              ))
+            )}
+          </div>
+          <div className="reviews">
+            <h2>Reviews</h2>
+            {product.reviews && product.reviews.length > 0 ? (
+              product.reviews.map((review, index) => (
+                <div key={index} className="review">
+                  <p><strong>{review.user}</strong> ({review.rating} stars)</p>
+                  <p>{review.comment}</p>
+                  <p><em>{new Date(review.createdAt).toLocaleDateString()}</em></p>
+                </div>
+              ))
+            ) : (
+              <p>No reviews yet.</p>
+            )}
+          </div>
+        </>
+      ) : (
+        <p>Product not found</p>
+      )}
+    </div>
+  );
+};
+
+export default ProductDetail;
