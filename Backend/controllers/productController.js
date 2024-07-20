@@ -27,12 +27,22 @@ exports.getProductById = async (req, res) => {
 
 // Create new product
 exports.createProduct = async (req, res) => {
+  const { name, description, price, category, thumbnail, images, reviews, averageRating } = req.body;
+
+  // Check if required fields are provided
+  if (!name || !description || !price || !category) {
+    return res.status(400).json({ message: 'All required fields must be provided' });
+  }
+
   const product = new Product({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    // Add other fields as needed
+    name,
+    description,
+    price,
+    category,
+    thumbnail, // Optional
+    images, // Optional
+    reviews, // Optional
+    averageRating // Optional
   });
 
   try {
@@ -55,7 +65,10 @@ exports.updateProduct = async (req, res) => {
     product.description = req.body.description || product.description;
     product.price = req.body.price || product.price;
     product.category = req.body.category || product.category;
-    // Update other fields as needed
+    product.thumbnail = req.body.thumbnail || product.thumbnail; // Optional
+    product.images = req.body.images || product.images; // Optional
+    product.reviews = req.body.reviews || product.reviews; // Optional
+    product.averageRating = req.body.averageRating || product.averageRating; // Optional
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
@@ -74,6 +87,17 @@ exports.deleteProduct = async (req, res) => {
 
     await product.remove();
     res.json({ message: 'Product deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Get products by category
+exports.getProductsByCategory = async (req, res) => {
+  const { category } = req.params;
+  try {
+    const products = await Product.find({ category });
+    res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

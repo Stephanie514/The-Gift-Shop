@@ -40,9 +40,14 @@ const productSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    required: true
+    // Make thumbnail optional
+    required: false
   },
-  images: [String],
+  images: {
+    type: [String],
+    // Make images optional
+    required: false
+  },
   reviews: [reviewSchema],
   averageRating: {
     type: Number,

@@ -1,20 +1,18 @@
-// src/components/ProductList.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import StarRating from './StarRating';
+import { useParams } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png'; // Ensure you have this image in your assets folder
 
-const ProductList = () => {
+const CategoryProductList = () => {
+  const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsByCategory = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`http://localhost:5000/api/products/category/${category}`);
         setProducts(response.data);
       } catch (err) {
         setError(err.message);
@@ -23,33 +21,34 @@ const ProductList = () => {
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchProductsByCategory();
+  }, [category]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      <h1>Product List</h1>
+      <h1>Products in {category}</h1>
       <div className="product-list">
-        {products.map(product => (
-          <div key={product._id} className="product-item">
-            <Link to={`/products/${product._id}`}>
+        {products.length > 0 ? (
+          products.map(product => (
+            <div key={product._id} className="product-item">
               <img
                 src={product.thumbnail || defaultThumbnail} // Use default image if no thumbnail
                 alt={product.name}
                 className="product-thumbnail"
               />
               <h2>{product.name}</h2>
-              <StarRating rating={product.averageRating || 0} />
               <p>Price: ${product.price}</p>
-            </Link>
-          </div>
-        ))}
+            </div>
+          ))
+        ) : (
+          <p>No products found in this category.</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default ProductList;
+export default CategoryProductList;

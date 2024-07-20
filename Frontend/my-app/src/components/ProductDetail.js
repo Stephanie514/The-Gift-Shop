@@ -1,5 +1,3 @@
-// src/components/ProductDetail.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -10,6 +8,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -25,6 +24,26 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleAddToCart = () => {
+    // Implement the add to cart functionality here
+    console.log(`Added ${quantity} of ${product.name} to cart`);
+  };
+
+  const handleOrderNow = () => {
+    // Implement the order now functionality here
+    console.log(`Ordered ${quantity} of ${product.name}`);
+  };
+
+  const handleIncrement = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(prevQuantity => prevQuantity - 1);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -62,6 +81,15 @@ const ProductDetail = () => {
             ) : (
               <p>No reviews yet.</p>
             )}
+          </div>
+          <div className="quantity-controls">
+            <button onClick={handleDecrement}>-</button>
+            <span>{quantity}</span>
+            <button onClick={handleIncrement}>+</button>
+          </div>
+          <div className="actions">
+            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleOrderNow}>Order Now</button>
           </div>
         </>
       ) : (
