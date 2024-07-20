@@ -203,3 +203,8 @@ body {
 .product-item p {
   font-size: 1rem;
 }
+
+.cart-icon {
+  width: 24px; /* Adjust size as needed */
+  height: auto;
+}

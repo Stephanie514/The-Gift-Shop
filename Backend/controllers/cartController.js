@@ -1,4 +1,4 @@
-const Cart = require('../models/Cart');
+/*const Cart = require('../models/Cart');
 
 exports.getCart = async (req, res) => {
   try {
@@ -53,5 +53,42 @@ exports.removeItemFromCart = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+};*/
+
+const CartItem = require('../models/Cart');
+
+// Add item to cart
+exports.addToCart = async (req, res) => {
+  try {
+    const { product, quantity } = req.body;
+    const userId = req.user.id; // Extract user ID from auth middleware
+    const newCartItem = new CartItem({ user: userId, product, quantity });
+    await newCartItem.save();
+    res.status(200).json({ message: 'Product added to cart' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error adding product to cart' });
+  }
+};
+
+// Remove item from cart
+exports.removeFromCart = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    await CartItem.findByIdAndDelete(itemId);
+    res.status(200).json({ message: 'Product removed from cart' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error removing product from cart' });
+  }
+};
+
+// View cart items
+exports.viewCart = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const cartItems = await CartItem.find({ user: userId }).populate('product');
+    res.status(200).json(cartItems);
+  } catch (err) {
+    res.status(500).json({ message: 'Error viewing cart' });
   }
 };
