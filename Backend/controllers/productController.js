@@ -2,11 +2,27 @@
 
 const Product = require('../models/Product');
 
-// Get all products
+// Get all products or filter by category with pagination
 exports.getAllProducts = async (req, res) => {
+  const { category, page = 1, limit = 20 } = req.query; // Default to page 1 and limit 20
   try {
-    const products = await Product.find();
-    res.json(products);
+    let query = {};
+    if (category) {
+      query.category = category;
+    }
+    
+    const products = await Product.find(query)
+                                  .skip((page - 1) * limit)
+                                  .limit(parseInt(limit))
+                                  .sort({ name: 1 }); // Sort alphabetically
+    const totalProducts = await Product.countDocuments(query);
+    
+    res.json({
+      products,
+      totalProducts,
+      totalPages: Math.ceil(totalProducts / limit),
+      currentPage: parseInt(page)
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -87,17 +103,6 @@ exports.deleteProduct = async (req, res) => {
 
     await product.remove();
     res.json({ message: 'Product deleted' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-// Get products by category
-exports.getProductsByCategory = async (req, res) => {
-  const { category } = req.params;
-  try {
-    const products = await Product.find({ category });
-    res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

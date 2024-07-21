@@ -174,32 +174,125 @@ body {
   font-size: 1.2rem;
 }
 
-/* Existing styles... */
+/**** Products List ****/
 
 .product-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center; /* Center align cards */
+}
+
+.product-item-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .product-item {
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
+  border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
-  width: 200px;
+  width: 320px; /* Adjusted width to include padding */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  cursor: pointer;
+  margin: 10px; /* Add margin between cards */
 }
 
-.product-thumbnail {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
+.product-item img {
+  width: 100%; /* Ensure the image fits within the card */
+  height: 300px;
+  object-fit: cover;
 }
 
-.product-item h2 {
-  font-size: 1.2rem;
+.product-item h3 {
+  font-size: 1.2em;
+  margin: 10px 0;
 }
 
 .product-item p {
-  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/**** Products filter ****/
+.product-filter {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.filter-group {
+  margin-bottom: 15px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filter-group input {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.filter-group button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/**** Products/Category Listing ****/
+.product-listing, .category-product-listing {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column {
+  width: 400px;
+  /* For now, it's empty */
+}
+
+.right-column {
+  width: calc(100% - 400px);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #0056b3;
 }

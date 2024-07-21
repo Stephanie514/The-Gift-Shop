@@ -1,4 +1,4 @@
-import React from 'react'; // Ensure there's only one import for React
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles.css';
 
