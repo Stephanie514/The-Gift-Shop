@@ -5,6 +5,9 @@ const productController = require('../controllers/productController');
 // Get all products or filter by category
 router.get('/', productController.getAllProducts);
 
+// Get filter options
+router.get('/filters', productController.getFilterOptions);
+
 // Get product by ID
 router.get('/:id', productController.getProductById);
 

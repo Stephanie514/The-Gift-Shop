@@ -1,8 +1,11 @@
+// src/components/ProductList.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png';
-import '../styles.css'; // Make sure to include this for CSS
+import Filter from './Filter';
+import '../styles.css';
 
 const ProductListing = () => {
   const [products, setProducts] = useState([]);
@@ -10,22 +13,29 @@ const ProductListing = () => {
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({});
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const query = new URLSearchParams({ ...filters, page: currentPage, limit: 20 }).toString();
+      const response = await axios.get(`http://localhost:5000/api/products?${query}`);
+      setProducts(response.data.products);
+      setTotalPages(response.data.totalPages);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/products?page=${currentPage}&limit=20`);
-        setProducts(response.data.products);
-        setTotalPages(response.data.totalPages);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
-  }, [currentPage]);
+  }, [currentPage, filters]);
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -37,7 +47,9 @@ const ProductListing = () => {
 
   return (
     <div className="product-listing">
-      <div className="left-column"></div>
+      <div className="left-column">
+        <Filter onFilterChange={handleFilterChange} currentFilters={filters} />
+      </div>
       <div className="right-column">
         <h2>Products Catalogue</h2>
         <p>Explore Our Wide Range of Gifts!</p>
@@ -48,10 +60,10 @@ const ProductListing = () => {
             products.map((product) => (
               <Link to={`/products/${product._id}`} key={product._id} className="product-item-link">
                 <div className="product-item">
-                  <img 
-                    src={product.thumbnail || defaultThumbnail} 
-                    alt={product.name} 
-                    className="product-image" 
+                  <img
+                    src={product.thumbnail || defaultThumbnail}
+                    alt={product.name}
+                    className="product-image"
                   />
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>

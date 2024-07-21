@@ -301,3 +301,100 @@ body {
   width: 24px; /* Adjust size as needed */
   height: auto;
 }
+
+/**** Filter Feature ****/
+
+/* src/styles.css */
+
+.filter-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.filter-container h3 {
+  margin-top: 0;
+}
+
+.filter-container div {
+  margin-bottom: 15px;
+}
+
+.filter-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.filter-container select,
+.filter-container input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.price-slider {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.price-slider-track {
+  height: 4px;
+  background: #ddd;
+  border-radius: 4px;
+  position: relative;
+}
+
+.price-slider-track > div {
+  height: 4px;
+  border-radius: 4px;
+}
+
+.price-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  top: -8px;
+}
+
+.price-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.price-inputs input {
+  width: 48%;
+}
+
+.filter-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.apply-filters {
+  background-color: #007bff;
+}
+
+.reset-filters {
+  background-color: #6c757d;
+}
+
+.apply-filters:hover {
+  background-color: #0056b3;
+}
+
+.reset-filters:hover {
+  background-color: #5a6268;
+}

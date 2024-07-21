@@ -1,20 +1,26 @@
-// controllers/productController.js
-
 const Product = require('../models/Product');
 
-// Get all products or filter by category with pagination
+// Get all products or filter by multiple criteria with pagination
 exports.getAllProducts = async (req, res) => {
-  const { category, page = 1, limit = 20 } = req.query; // Default to page 1 and limit 20
+  const { category, price, occasion, shop, gender, availability, page = 1, limit = 20 } = req.query; // Default to page 1 and limit 20
   try {
     let query = {};
-    if (category) {
-      query.category = category;
-    }
     
+    if (category) query.category = category;
+    if (occasion) query.occasion = { $in: occasion.split(',') }; // Supports multiple occasions
+    if (shop) query.shop = shop;
+    if (gender) query.gender = gender;
+    if (availability === 'In Stock') query.stockNumbers = { $gt: 0 };
+    if (price) {
+      const [minPrice, maxPrice] = price.split(',').map(Number);
+      query.price = { $gte: minPrice, $lte: maxPrice };
+    }
+
     const products = await Product.find(query)
                                   .skip((page - 1) * limit)
                                   .limit(parseInt(limit))
                                   .sort({ name: 1 }); // Sort alphabetically
+
     const totalProducts = await Product.countDocuments(query);
     
     res.json({
@@ -23,6 +29,19 @@ exports.getAllProducts = async (req, res) => {
       totalPages: Math.ceil(totalProducts / limit),
       currentPage: parseInt(page)
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Get filter options
+exports.getFilterOptions = async (req, res) => {
+  try {
+    const categories = await Product.distinct('category');
+    const occasions = await Product.distinct('occasion');
+    const shops = await Product.distinct('shop');
+    const genders = ['His', 'Her', 'Non-Binary'];
+    res.json({ categories, occasions, shops, genders });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -43,7 +62,7 @@ exports.getProductById = async (req, res) => {
 
 // Create new product
 exports.createProduct = async (req, res) => {
-  const { name, description, price, category, thumbnail, images, reviews, averageRating } = req.body;
+  const { name, description, price, category, thumbnail, images, reviews, averageRating, occasion, shop, gender, stockNumbers } = req.body;
 
   // Check if required fields are provided
   if (!name || !description || !price || !category) {
@@ -58,7 +77,11 @@ exports.createProduct = async (req, res) => {
     thumbnail, // Optional
     images, // Optional
     reviews, // Optional
-    averageRating // Optional
+    averageRating, // Optional
+    occasion, // New field
+    shop, // New field
+    gender, // New field
+    stockNumbers // New field
   });
 
   try {
@@ -85,6 +108,10 @@ exports.updateProduct = async (req, res) => {
     product.images = req.body.images || product.images; // Optional
     product.reviews = req.body.reviews || product.reviews; // Optional
     product.averageRating = req.body.averageRating || product.averageRating; // Optional
+    product.occasion = req.body.occasion || product.occasion; // Updated field
+    product.shop = req.body.shop || product.shop; // Updated field
+    product.gender = req.body.gender || product.gender; // Updated field
+    product.stockNumbers = req.body.stockNumbers || product.stockNumbers; // Updated field
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
