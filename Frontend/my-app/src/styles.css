@@ -296,3 +296,8 @@ body {
 .pagination button.active {
   background-color: #0056b3;
 }
+
+.cart-icon {
+  width: 24px; /* Adjust size as needed */
+  height: auto;
+}

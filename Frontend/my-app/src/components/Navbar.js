@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import '../styles.css'; // Import your CSS file for Navbar styling
+import CartIcon from '../assets/shoppingcart.png';
 
 const Navbar = () => {
   const { token, setToken } = useContext(AuthContext);
@@ -16,6 +17,11 @@ const Navbar = () => {
       <ul className="navbar-nav">
         <li className="nav-item">
           <Link to="/" className="nav-link">Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/cart" className="nav-link">
+            <img src={CartIcon} alt="Cart" className="cart-icon" />
+            </Link>
         </li>
         {!token && (
           <>
