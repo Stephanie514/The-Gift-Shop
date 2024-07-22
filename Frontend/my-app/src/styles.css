@@ -136,6 +136,117 @@ body {
 .nav-link:hover, .logout-btn:hover {
   background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background on hover */
   border-radius: 4px; /* Rounded corners on hover */
+}*/
+
+
+/**** New Navbar ****/
+/* styles.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+}
+
+.logo {
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+}
+
+.website-name {
+  margin-left: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-dropdown {
+  position: relative;
+}
+
+.dropdown-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 200px; /* Adjust width as needed */
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px;
+}
+
+.dropdown-link {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+
+.dropdown-link:hover {
+  background: #f0f0f0;
+}
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 600px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  margin-left: 15px;
+  color: #000;
+  text-decoration: none;
+}
+
+.logout-btn {
+  margin-left: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 /**** Star Rating ****/
@@ -252,7 +363,6 @@ body {
 
 .left-column {
   width: 400px;
-  /* For now, it's empty */
 }
 
 .right-column {
@@ -271,6 +381,13 @@ body {
   overflow: hidden;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.star-ratings {
+  margin-top: 5px;
 }
 
 .product-image {
@@ -397,4 +514,46 @@ body {
 
 .reset-filters:hover {
   background-color: #5a6268;
+}
+
+/**** Search Bar ****/
+
+/* styles.css */
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.icon-button:hover {
+  color: #333;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.icon-button.search-icon {
+  margin-right: 10px; /* Space between the search input and search icon */
+}
+
+.icon-button.clear-icon {
+  margin-left: 10px; /* Space between search icon and clear search icon */
+}
+
+.icon-button svg {
+  font-size: 24px; /* Make the icons slightly bigger */
 }

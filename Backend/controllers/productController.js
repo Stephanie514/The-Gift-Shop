@@ -1,11 +1,13 @@
+// Backend/controllers/productController.js
+
 const Product = require('../models/Product');
 
-// Get all products or filter by multiple criteria with pagination
+// Get all products or filter by multiple criteria with pagination and keyword search
 exports.getAllProducts = async (req, res) => {
-  const { category, price, occasion, shop, gender, availability, page = 1, limit = 20 } = req.query; // Default to page 1 and limit 20
+  const { category, price, occasion, shop, gender, availability, keyword, page = 1, limit = 20 } = req.query; // Default to page 1 and limit 20
   try {
     let query = {};
-    
+
     if (category) query.category = category;
     if (occasion) query.occasion = { $in: occasion.split(',') }; // Supports multiple occasions
     if (shop) query.shop = shop;
@@ -14,6 +16,14 @@ exports.getAllProducts = async (req, res) => {
     if (price) {
       const [minPrice, maxPrice] = price.split(',').map(Number);
       query.price = { $gte: minPrice, $lte: maxPrice };
+    }
+    if (keyword) {
+      const searchRegex = new RegExp(keyword, 'i'); // 'i' makes it case-insensitive
+      query.$or = [
+        { name: { $regex: searchRegex } },
+        { description: { $regex: searchRegex } },
+        // Add any other fields you want to search through
+      ];
     }
 
     const products = await Product.find(query)
@@ -130,6 +140,28 @@ exports.deleteProduct = async (req, res) => {
 
     await product.remove();
     res.json({ message: 'Product deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Search products by keyword
+exports.searchProducts = async (req, res) => {
+  const { keyword } = req.query;
+
+  if (!keyword) {
+    return res.status(400).json({ message: 'Keyword query parameter is required' });
+  }
+
+  try {
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: keyword, $options: 'i' } },
+        { description: { $regex: keyword, $options: 'i' } }
+      ]
+    });
+
+    res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

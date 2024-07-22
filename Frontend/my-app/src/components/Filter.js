@@ -109,7 +109,7 @@ const Filter = ({ onFilterChange, currentFilters }) => {
             />
           </div>
         </div>
-        <span>{`$${priceRange[0]} - $${priceRange[1]}`}</span>
+        <span>{`KES ${priceRange[0]} - KES ${priceRange[1]}`}</span>
       </div>
 
       {/* Occasion Filter */}

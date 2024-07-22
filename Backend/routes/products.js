@@ -1,6 +1,11 @@
+// Backend/routes/products.js
+
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
+
+// Search products by keyword
+router.get('/search', productController.searchProducts);
 
 // Get all products or filter by category
 router.get('/', productController.getAllProducts);

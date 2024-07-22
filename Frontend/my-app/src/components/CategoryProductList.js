@@ -1,10 +1,9 @@
-// src/components/CategoryProductList.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png';
 import Filter from './Filter';
+import StarRatings from 'react-star-ratings'; // Import the StarRatings component
 import '../styles.css';
 
 const CategoryProductList = () => {
@@ -67,7 +66,14 @@ const CategoryProductList = () => {
                   />
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
-                  <p>${product.price.toFixed(2)}</p>
+                  <p>KES {product.price.toFixed(2)}</p>
+                  <StarRatings
+                    rating={product.averageRating}
+                    starRatedColor="gold"
+                    numberOfStars={5}
+                    starDimension="20px"
+                    starSpacing="2px"
+                  />
                 </div>
               </Link>
             ))

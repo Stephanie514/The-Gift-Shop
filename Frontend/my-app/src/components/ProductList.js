@@ -1,10 +1,10 @@
 // src/components/ProductList.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png';
 import Filter from './Filter';
+import StarRatings from 'react-star-ratings'; // Import the StarRatings component
 import '../styles.css';
 
 const ProductListing = () => {
@@ -14,11 +14,13 @@ const ProductListing = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({});
+  const [searchParams] = useSearchParams();
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const query = new URLSearchParams({ ...filters, page: currentPage, limit: 20 }).toString();
+      const keyword = searchParams.get('keyword') || '';
+      const query = new URLSearchParams({ ...filters, keyword, page: currentPage, limit: 20 }).toString();
       const response = await axios.get(`http://localhost:5000/api/products?${query}`);
       setProducts(response.data.products);
       setTotalPages(response.data.totalPages);
@@ -31,7 +33,7 @@ const ProductListing = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage, filters]);
+  }, [currentPage, filters, searchParams]);
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
@@ -67,7 +69,14 @@ const ProductListing = () => {
                   />
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
-                  <p>${product.price.toFixed(2)}</p>
+                  <p>KES {product.price.toFixed(2)}</p>
+                  <StarRatings
+                    rating={product.averageRating}
+                    starRatedColor="gold"
+                    numberOfStars={5}
+                    starDimension="20px"
+                    starSpacing="2px"
+                  />
                 </div>
               </Link>
             ))
