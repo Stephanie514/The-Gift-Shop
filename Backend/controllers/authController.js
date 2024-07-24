@@ -18,11 +18,7 @@ exports.signup = async (req, res) => {
 
     await user.save();
 
-    const payload = { user: { id: user.id } };
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) throw err;
-      res.json({ token });
-    });
+    res.status(201).json({ message: 'User created successfully. Please log in.' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -35,19 +31,22 @@ exports.login = async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid Credentials' });
+      return res.status(400).json({ message: 'No user found' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid Credentials' });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const payload = { user: { id: user.id } };
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) throw err;
-      res.json({ token });
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h'
     });
+  
+    const response = { token, userId: user._id };
+    console.log('Login response:', response);
+    res.json(response);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

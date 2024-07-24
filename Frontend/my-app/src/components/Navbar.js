@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { FaCartPlus, FaUserCircle, FaSearch, FaTimes } from 'react-icons/fa'; // Import icons
+import { FaCartPlus, FaUserCircle, FaSearch, FaTimes, FaGift } from 'react-icons/fa'; // Import icons
 import '../styles.css'; // Import your CSS file for Navbar styling
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/" className="navbar-logo">
-          <img src="/path/to/logo.png" alt="Logo" className="logo" /> {/* Replace with your logo */}
+          <FaGift size={50} color="#662549" className="logo-icon" />
           <span className="website-name">The Gift Shop</span>
         </Link>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { UserProvider } from './contexts/UserContext';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 //import Products from './components/Products';
@@ -12,6 +13,7 @@ import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import CategoryProductList from './components/CategoryProductList';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import UserAccount from './components/UserAccount';
 import Cart from './pages/CartPage';
 import Checkout from './pages/CheckoutPage';
 import './App.css';
@@ -22,7 +24,7 @@ const ProtectedRoute = ({ element }) => {
 };
 
 const App = () => (
-  <AuthProvider>
+  <UserProvider>
     <Router>
       <div className="App">
         <Navbar />
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/account" element={<UserAccount />} />
+          { /*<Route path="/account" element={<UserAccountPage />} /> */}
           <Route path="/contact" element={<Contact />} /> {/* Add the contact route */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
@@ -42,7 +46,7 @@ const App = () => (
         <Footer />
       </div>
     </Router>
-  </AuthProvider>
+  </UserProvider>
 );
 
 export default App;
