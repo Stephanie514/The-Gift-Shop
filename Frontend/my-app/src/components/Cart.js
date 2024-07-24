@@ -51,15 +51,13 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    // Fetch cart items from API
-    axios.get('/api/cart/view')
-      .then(response => setCartItems(response.data))
+    axios.get('http://localhost:5000/api/cart/view')
+      .then(response => setCartItems(response.data.items)) // Ensure correct data path
       .catch(error => console.error('Error fetching cart items:', error));
   }, []);
 
   const handleCheckout = () => {
-    // Handle checkout process
-    axios.post('/api/checkout/checkout')
+    axios.post('http://localhost:5000/api/checkout/checkout')
       .then(response => window.location.href = response.data.url)
       .catch(error => console.error('Error during checkout:', error));
   };
@@ -71,7 +69,29 @@ const Cart = () => {
         <p>Your cart is empty. <Link to="/products">Continue Shopping</Link></p>
       ) : (
         <div>
-          {/* Display cart items */}
+          {cartItems.map(item => (
+            <div key={item.product._id}>
+              <h2>{item.product.name}</h2>
+              <p>Quantity: {item.quantity}</p>
+              <p>Price: ${item.product.price}</p>
+            </div>
+          ))}
+          <button onClick={handleCheckout}>Checkout</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Cart;
+
+  /*return (
+    <div>
+      <h1>Your Cart</h1>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty. <Link to="/products">Continue Shopping</Link></p>
+      ) : (
+        <div>
           {cartItems.map(item => (
             <div key={item._id}>
               <h2>{item.product.name}</h2>
@@ -86,4 +106,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart;*/
