@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png'; // Ensure you have this image in your assets folder
+import { Link } from 'react-router-dom';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -25,10 +26,22 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  const handleAddToCart = () => {
+  /*const handleAddToCart = () => {
     // Implement the add to cart functionality here
     console.log(`Added ${quantity} of ${product.name} to cart`);
-  };
+  };*/
+
+  const handleAddToCart = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/cart/add', {
+        productId: product._id,
+        quantity: quantity
+      });
+      console.log(`Added ${quantity} of ${product.name} to cart`);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };  
 
   const handleOrderNow = () => {
     // Implement the order now functionality here
@@ -90,6 +103,9 @@ const ProductDetail = () => {
           <div className="actions">
             <button onClick={handleAddToCart}>Add to Cart</button>
             <button onClick={handleOrderNow}>Order Now</button>
+          </div>
+          <div>
+            <Link to="/cart">View Your Cart</Link>
           </div>
         </>
       ) : (
