@@ -1,6 +1,6 @@
-/*const Cart = require('../models/Cart');
+/*const Cart = require('../models/Cart');*/
 
-exports.getCart = async (req, res) => {
+/*exports.getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) {
@@ -56,18 +56,25 @@ exports.removeItemFromCart = async (req, res) => {
   }
 };*/
 
-const CartItem = require('../models/Cart');
+const CartItem = require('../models/cartItem'); // Make sure to import the CartItem model
 
 // Add item to cart
 exports.addToCart = async (req, res) => {
   try {
     const { product, quantity } = req.body;
     const userId = req.user.id; // Extract user ID from auth middleware
+
+    // Validate input
+    if (!product || !quantity) {
+      return res.status(400).json({ message: 'Product ID and quantity are required' });
+    }
+
     const newCartItem = new CartItem({ user: userId, product, quantity });
     await newCartItem.save();
     res.status(200).json({ message: 'Product added to cart' });
   } catch (err) {
-    res.status(500).json({ message: 'Error adding product to cart' });
+    console.error('Error adding product to cart:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -75,10 +82,22 @@ exports.addToCart = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   try {
     const itemId = req.params.id;
-    await CartItem.findByIdAndDelete(itemId);
+
+    // Validate input
+    if (!itemId) {
+      return res.status(400).json({ message: 'Item ID is required' });
+    }
+
+    const result = await CartItem.findByIdAndDelete(itemId);
+
+    if (!result) {
+      return res.status(404).json({ message: 'Cart item not found' });
+    }
+
     res.status(200).json({ message: 'Product removed from cart' });
   } catch (err) {
-    res.status(500).json({ message: 'Error removing product from cart' });
+    console.error('Error removing product from cart:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -86,9 +105,21 @@ exports.removeFromCart = async (req, res) => {
 exports.viewCart = async (req, res) => {
   try {
     const userId = req.user.id;
+
+    // Validate input
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
     const cartItems = await CartItem.find({ user: userId }).populate('product');
+
+    if (!cartItems.length) {
+      return res.status(404).json({ message: 'No items in cart' });
+    }
+
     res.status(200).json(cartItems);
   } catch (err) {
-    res.status(500).json({ message: 'Error viewing cart' });
+    console.error('Error viewing cart:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

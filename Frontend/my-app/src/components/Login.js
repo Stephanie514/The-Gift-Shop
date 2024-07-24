@@ -13,7 +13,7 @@ const Login = () => {
       const data = await login(email, password);
       localStorage.setItem('token', data.token);
       alert('Login successful!');
-      navigate('/products'); // Redirect to products page
+      navigate('/HomePage'); // Redirect to HomePage
     } catch (error) {
       console.error(error.message);
     }

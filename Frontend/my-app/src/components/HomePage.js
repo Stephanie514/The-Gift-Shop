@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Hero from './Hero'; // Import the Hero component
 import '../styles.css';
+import { logout } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
 
 // Helper function to fetch categories from the backend
 const fetchCategories = async () => {
@@ -16,6 +20,8 @@ const fetchCategories = async () => {
 };
 
 const HomePage = () => {
+  const { state } = useAuth();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -27,8 +33,20 @@ const HomePage = () => {
     getCategories();
   }, []);
 
+  // Check if the user is authenticated, if not redirect to /auth
+  if (!state.isAuthenticated) {
+    navigate('/auth');
+    return null;
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/LandingPage');
+  };
+
   return (
     <div className="homepage">
+     <button onClick={handleLogout}>Logout</button> 
       <Hero /> {/* Add Hero section */}
 
       <div className="category-section">

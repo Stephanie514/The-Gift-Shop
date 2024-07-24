@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import GlobalStyles from './GlobalStyles';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 //import Products from './components/Products';
@@ -14,6 +15,7 @@ import CategoryProductList from './components/CategoryProductList';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Cart from './pages/CartPage';
 import Checkout from './pages/CheckoutPage';
+import LandingPage from './components/LandingPage';
 import './App.css';
 
 const ProtectedRoute = ({ element }) => {
@@ -23,11 +25,13 @@ const ProtectedRoute = ({ element }) => {
 
 const App = () => (
   <AuthProvider>
+    <GlobalStyles />
     <Router>
       <div className="App">
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/homepage" element={<ProtectedRoute element={<HomePage />} />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/products/category/:category" element={<CategoryProductList />} />

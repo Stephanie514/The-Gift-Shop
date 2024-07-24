@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import defaultThumbnail from '../assets/default-thumbnail.png'; // Ensure you have this image in your assets folder
 import { Link } from 'react-router-dom';
+import cartService from '../services/cartService'; // Import the cartService
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const ProductDetail = () => {
     console.log(`Added ${quantity} of ${product.name} to cart`);
   };*/
 
-  const handleAddToCart = async () => {
+  /*const handleAddToCart = async () => {
     try {
       await axios.post('http://localhost:5000/api/cart/add', {
         productId: product._id,
@@ -41,7 +42,16 @@ const ProductDetail = () => {
     } catch (error) {
       console.error('Error adding product to cart:', error);
     }
-  };  
+  };*/
+  const handleAddToCart = async () => {
+    try {
+      await cartService.addToCart(product._id, quantity);
+      console.log(`Added ${quantity} of ${product.name} to cart`);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
+
 
   const handleOrderNow = () => {
     // Implement the order now functionality here
