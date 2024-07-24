@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const productRoutes = require('./routes/products');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ mongoose.connect(uri, {
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', userRoutes); // Use user routes
 app.use('/api/cart', require('./routes/cartRoutes'));
 app.use('/api/payment', require('./routes/paymentRoutes'));
 app.use('/api/mpesa', require('./routes/mpesa'));

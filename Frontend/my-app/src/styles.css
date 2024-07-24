@@ -853,3 +853,254 @@ width: 100%;
   font-size: 1rem;
   margin-bottom: 5px;
 }
+
+/**** User Account Page ****/
+
+/* Frontend/my-app/src/styles.css */
+.user-account-page {
+  display: flex;
+  height: 100vh; /* Full height to cover the viewport */
+  padding: 20px;
+}
+
+.user-account {
+  display: flex;
+  width: 100%; /* Full width of the container */
+}
+
+.tabs {
+  width: 200px; /* Adjust the width of the sidebar as needed */
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tabs button.active {
+  background: #ddd;
+}
+
+.tab-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* Ensure scroll if content overflows */
+}
+
+/* Frontend/my-app/src/styles.css */
+.user-account {
+  display: flex;
+}
+
+.tabs {
+  width: 200px;
+  border-right: 1px solid #ccc;
+}
+
+.tabs button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.tabs button:hover {
+  background-color: #f0f0f0;
+}
+
+.tab-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.edit-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.account-details, .address-book {
+  margin-bottom: 20px;
+}
+
+.address-book ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.address-book li {
+  margin-bottom: 10px;
+}
+
+/* styles.css */
+/* UserAccount.css */
+
+/* Container for the user account page */
+.user-account {
+  display: flex;
+}
+
+/* Tabs container */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 200px; /* Adjust width as needed */
+  background-color: #f8f9fa;
+  border-right: 1px solid #eaeaea;
+  padding: 10px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+  color: #007bff;
+  font-size: 16px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.tabs button.active {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  background-color: #e9ecef;
+}
+
+/* Content area */
+.tab-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.profile-address-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.account-details-card,
+.address-book {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.default-address {
+  margin-top: 10px;
+}
+
+.no-default-address {
+  color: red;
+  font-style: italic;
+}
+
+.user-account {
+  display: flex;
+  margin: 20px;
+}
+
+.tabs {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.tabs button {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tabs button.active {
+  background: #007bff;
+  color: white;
+}
+
+.tab-content {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.user-account {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.tabs .active {
+  font-weight: bold;
+}
+
+.profile-address-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.account-details-card {
+  width: 45%;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.address-book {
+  width: 45%;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.default-address {
+  font-weight: bold;
+}
+
+.no-default-address {
+  color: red;
+  font-style: italic;
+}
+
+.add-address-button {
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-address-form {
+  margin-top: 20px;
+}
+
+.add-address-form label {
+  display: block;
+  margin-bottom: 10px;
+}
