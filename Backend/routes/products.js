@@ -1,5 +1,3 @@
-// Backend/routes/products.js
-
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
@@ -24,5 +22,11 @@ router.put('/:id', productController.updateProduct);
 
 // Delete product
 router.delete('/:id', productController.deleteProduct);
+
+// Get products for a specific shop
+router.get('/shop/:shopId', productController.getProductsForShop);
+
+// Update product availability
+router.patch('/:id/availability', productController.updateProductAvailability);
 
 module.exports = router;

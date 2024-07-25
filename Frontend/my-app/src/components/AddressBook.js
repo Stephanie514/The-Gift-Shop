@@ -1,7 +1,13 @@
 // src/components/AddressBook.js
-import React, { useState } from 'react';
+// src/components/AddressBook.js
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AddressBook = ({ addresses, defaultAddress, onSelectDefault, onAddOrUpdateAddress, showAddAddressForm, setShowAddAddressForm }) => {
+  const [counties, setCounties] = useState([]);
+  const [subcounties, setSubcounties] = useState([]);
+  const [wards, setWards] = useState([]);
   const [newAddress, setNewAddress] = useState({
     county: '',
     subcounty: '',
@@ -9,6 +15,33 @@ const AddressBook = ({ addresses, defaultAddress, onSelectDefault, onAddOrUpdate
     local: ''
   });
   const [isDefault, setIsDefault] = useState(false);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/locations');
+        setCounties(response.data);
+      } catch (error) {
+        console.error('Error fetching locations:', error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  const handleCountyChange = (e) => {
+    const selectedCounty = e.target.value;
+    const county = counties.find(c => c.name === selectedCounty);
+    setSubcounties(county ? county.subcounties : []);
+    setNewAddress({ ...newAddress, county: selectedCounty, subcounty: '', ward: '' });
+  };
+
+  const handleSubcountyChange = (e) => {
+    const selectedSubcounty = e.target.value;
+    const subcounty = subcounties.find(s => s.name === selectedSubcounty);
+    setWards(subcounty ? subcounty.wards : []);
+    setNewAddress({ ...newAddress, subcounty: selectedSubcounty, ward: '' });
+  };
 
   const handleAddAddress = (e) => {
     e.preventDefault();
@@ -46,10 +79,13 @@ const AddressBook = ({ addresses, defaultAddress, onSelectDefault, onAddOrUpdate
               <select
                 name="county"
                 value={newAddress.county}
-                onChange={(e) => setNewAddress({ ...newAddress, county: e.target.value })}
+                onChange={handleCountyChange}
                 required
               >
-                {/* Populate with Kenyan Counties */}
+                <option value="">Select County</option>
+                {counties.map(county => (
+                  <option key={county.name} value={county.name}>{county.name}</option>
+                ))}
               </select>
             </label>
             <label>
@@ -57,10 +93,13 @@ const AddressBook = ({ addresses, defaultAddress, onSelectDefault, onAddOrUpdate
               <select
                 name="subcounty"
                 value={newAddress.subcounty}
-                onChange={(e) => setNewAddress({ ...newAddress, subcounty: e.target.value })}
+                onChange={handleSubcountyChange}
                 required
               >
-                {/* Populate with Subcounties based on selected County */}
+                <option value="">Select Subcounty</option>
+                {subcounties.map(subcounty => (
+                  <option key={subcounty.name} value={subcounty.name}>{subcounty.name}</option>
+                ))}
               </select>
             </label>
             <label>
@@ -71,7 +110,10 @@ const AddressBook = ({ addresses, defaultAddress, onSelectDefault, onAddOrUpdate
                 onChange={(e) => setNewAddress({ ...newAddress, ward: e.target.value })}
                 required
               >
-                {/* Populate with Wards based on selected Subcounty */}
+                <option value="">Select Ward</option>
+                {wards.map(ward => (
+                  <option key={ward.name} value={ward.name}>{ward.name}</option>
+                ))}
               </select>
             </label>
             <label>

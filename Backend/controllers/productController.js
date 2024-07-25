@@ -75,7 +75,7 @@ exports.createProduct = async (req, res) => {
   const { name, description, price, category, thumbnail, images, reviews, averageRating, occasion, shop, gender, stockNumbers } = req.body;
 
   // Check if required fields are provided
-  if (!name || !description || !price || !category) {
+  if (!name || !description || !price || !category || !shop) {
     return res.status(400).json({ message: 'All required fields must be provided' });
   }
 
@@ -164,5 +164,35 @@ exports.searchProducts = async (req, res) => {
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+// Get products for a specific shop/user
+exports.getProductsForShop = async (req, res) => {
+  const { shop } = req.params;
+  try {
+    const products = await Product.find({ shop })
+                                  .sort({ name: 1 }); // Sort alphabetically
+
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Update product availability
+exports.updateProductAvailability = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    product.stockNumbers = req.body.stockNumbers !== undefined ? req.body.stockNumbers : product.stockNumbers;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };

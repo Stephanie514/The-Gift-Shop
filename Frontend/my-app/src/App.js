@@ -12,6 +12,7 @@ import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import CategoryProductList from './components/CategoryProductList';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { UserProvider } from './contexts/UserContext';
 import UserAccount from './components/UserAccount';
 import Cart from './pages/CartPage';
 import Checkout from './pages/CheckoutPage';
@@ -24,24 +25,24 @@ const ProtectedRoute = ({ element }) => {
 };
 
 const App = () => (
-  <AuthProvider>
+  <UserProvider>
     <Router>
       <div className="App">
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/homepage" element={<ProtectedRoute element={<HomePage />} />} />
+          <Route path="/homepage" element={<HomePage />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/products/category/:category" element={<CategoryProductList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/account" element={<UserAccount />} />
+          <Route path="/account" element={<ProtectedRoute element={<UserAccount />} />} />
           { /*<Route path="/account" element={<UserAccountPage />} /> */}
           <Route path="/contact" element={<Contact />} /> {/* Add the contact route */}
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/cart" element={<ProtectedRoute element={<Cart />} />} />
+          <Route path="/checkout" element={<ProtectedRoute element={<Checkout />} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

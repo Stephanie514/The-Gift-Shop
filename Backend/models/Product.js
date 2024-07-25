@@ -1,6 +1,9 @@
+// models/Product.js
 const mongoose = require('mongoose');
+const { Schema } = mongoose; // Destructure Schema from mongoose
 
-const reviewSchema = new mongoose.Schema({
+// Schema for product reviews
+const reviewSchema = new Schema({
   user: {
     type: String,
     required: true
@@ -21,7 +24,8 @@ const reviewSchema = new mongoose.Schema({
   }
 });
 
-const productSchema = new mongoose.Schema({
+// Schema for products
+const productSchema = new Schema({
   name: {
     type: String,
     required: true
@@ -58,8 +62,9 @@ const productSchema = new mongoose.Schema({
     default: ''
   },
   shop: {
-    type: String,
-    default: ''
+    type: Schema.Types.ObjectId,
+    ref: 'Shop',
+    required: true
   },
   gender: {
     type: String,
@@ -77,6 +82,7 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+// Create and export the Product model
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;

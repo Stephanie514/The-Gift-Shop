@@ -1104,3 +1104,61 @@ width: 100%;
   display: block;
   margin-bottom: 10px;
 }
+.user-account {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #f4f4f4;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: #fff;
+  border-bottom: 2px solid #007bff;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.shop-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.products-table th,
+.products-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.products-table th {
+  background-color: #f4f4f4;
+}
+
+.add-product-button-container {
+  text-align: center;
+}
+
+.add-product-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

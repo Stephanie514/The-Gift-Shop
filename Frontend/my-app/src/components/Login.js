@@ -1,3 +1,4 @@
+// src/components/Login.js
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,10 +14,23 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const data = await login(email, password);
-      localStorage.setItem('token', data.token);
-      alert('Login successful!');
-      navigate('/products'); // Redirect to products page
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+
+      console.log('Login response:', response);
+
+      const { token } = response.data;
+
+      console.log('Token:', token);
+
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.user.id;  // Adjust based on your token structure
+
+      console.log('UserId:', userId);
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', userId);
+      dispatch({ type: 'LOGIN', payload: token });
+      navigate('/homepage');
     } catch (error) {
       console.error('Error logging in:', error);
     }

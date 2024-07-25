@@ -123,9 +123,24 @@ const addOrUpdateAddress = async (req, res) => {
     }
 };
 
+const getShopsByUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate({
+      path: 'shops',
+      populate: { path: 'products' }
+    });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.status(200).json(user.shops);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
     getAllUsers,
     getUserById,
+    getShopsByUser,
     createUser,
     updateUser,
     deleteUser,
