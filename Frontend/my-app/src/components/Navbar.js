@@ -1,18 +1,19 @@
-// Navbar.js
-import React, { useContext, useState } from 'react';
+// src/components/Navbar.js
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import useAuth from '../hooks/useAuth'; // Import updated useAuth hook
 import { FaCartPlus, FaUserCircle, FaSearch, FaTimes, FaGift } from 'react-icons/fa'; // Import icons
 import '../styles.css'; // Import your CSS file for Navbar styling
 
 const Navbar = () => {
-  const { token, setToken } = useContext(AuthContext);
+  const { state, dispatch } = useAuth(); // Use updated useAuth hook
   const [keyword, setKeyword] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogout = () => {
-    setToken(null);
-    // Optionally, remove the token from localStorage or cookie if you use them
+    dispatch({ type: 'LOGOUT' }); // Dispatch logout action
+    localStorage.removeItem('token'); // Remove token from localStorage if needed
+    navigate('/homepage'); // Redirect to homepage after logout
   };
 
   const handleSearch = () => {
@@ -31,8 +32,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/" className="navbar-logo">
-          <FaGift size={50} color="#662549" className="logo-icon" />
+        <Link to="/homepage" className="navbar-logo">
+          <FaGift size={50} color="#f39f5a" className="logo-icon" />
           <span className="website-name">The Gift Shop</span>
         </Link>
       </div>
@@ -43,28 +44,29 @@ const Navbar = () => {
           className="search-input"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          aria-label="Search"
         />
-        <button onClick={handleSearch} className="icon-button">
+        <button onClick={handleSearch} className="icon-button" aria-label="Search">
           <FaSearch size={30} color='#f39f5a'/>
         </button>
-        <button onClick={handleClearSearch} className="icon-button">
-          <FaTimes size={40} color='#f39f5a'/>
+        <button onClick={handleClearSearch} className="icon-button" aria-label="Clear Search">
+          <FaTimes size={30} color='#f39f5a'/>
         </button>
       </div>
       <div className="navbar-right">
-        <Link to="/cart" className="nav-link">
+        <Link to="/cart" className="nav-link" aria-label="Cart">
           <FaCartPlus size={35} />
         </Link>
-        <Link to="/account" className="nav-link">
+        <Link to="/account" className="nav-link" aria-label="Account">
           <FaUserCircle size={35} />
         </Link>
-        {!token ? (
+        {!state.isAuthenticated ? (
           <>
-            <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/signup" className="nav-link">Signup</Link>
+            <Link to="/login" className="nav-link" aria-label="Login">Login</Link>
+            <Link to="/signup" className="nav-link" aria-label="Signup">Signup</Link>
           </>
         ) : (
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          <button onClick={handleLogout} className="logout-btn" aria-label="Logout">Logout</button>
         )}
       </div>
     </nav>

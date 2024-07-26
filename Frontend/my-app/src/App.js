@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -11,7 +12,7 @@ import Contact from './components/Contact';
 import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import CategoryProductList from './components/CategoryProductList';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
 import UserAccount from './components/UserAccount';
 import Cart from './pages/CartPage';
@@ -21,7 +22,7 @@ import './App.css';
 
 const ProtectedRoute = ({ element }) => {
   const { state } = useAuth();
-  return state.isAuthenticated ? element : <Navigate to="/auth" />;
+  return state.isAuthenticated ? element : <Navigate to="/signup" />;
 };
 
 const App = () => (

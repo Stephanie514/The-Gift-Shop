@@ -1,9 +1,9 @@
 // src/components/HomePage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaGift } from 'react-icons/fa';
 import Hero from './Hero'; // Import the Hero component
 import '../styles.css';
-import { logout } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -39,16 +39,9 @@ const HomePage = () => {
     return null;
   }
 
-  const handleLogout = () => {
-    logout();
-    navigate('/LandingPage');
-  };
-
   return (
-    <div className="homepage">
-     <button onClick={handleLogout}>Logout</button> 
+    <div className="homepage"> 
       <Hero /> {/* Add Hero section */}
-
       <div className="category-section">
         <h1>Categories</h1>
         <p>Browse through our wide selection of products and enjoy a seamless shopping experience.</p>
@@ -99,7 +92,7 @@ const HomePage = () => {
         </div>
         <div className="mostWanted-text">
           <h1>Most Wanted</h1>
-          <p>A selection of our most wanted products!</p>
+          <p>A selection of our highly-rated products!</p>
           <a href="/products" className="shop-now-button">Shop Now!</a>
         </div>
       </div>
@@ -128,21 +121,21 @@ const HomePage = () => {
 
       <div className="support-section">
         <div className="support-column">
-          <img src="path/to/logo.png" alt="Logo" className="support-logo" />
-          <h2>Website Name</h2>
+          <FaGift size={120} color="#662549" className="icon" />
+          <h2>The Gift Shop</h2>
         </div>
         <div className="support-column">
           <p>Contact Details:</p>
-          <p>Mobile: +254 700 000000</p>
-          <p>Phone: +254 20 0000000</p>
-          <p>Email: support@example.com</p>
+          <p>Mobile: +254 792 022972</p>
+          <p>Phone: +254 715 124162</p>
+          <p>Email: thegiftshop401@gmail.com</p>
         </div>
         <div className="support-column">
           <p>Pickup Locations in Nairobi:</p>
           <ul>
-            <li>Location 1: Address 1</li>
-            <li>Location 2: Address 2</li>
-            <li>Location 3: Address 3</li>
+            <li>Kilimani: Adlife Plaza - 2nd Flr, Chania Ave. - Nairobi</li>
+            <li>Imaara Daima: Imaara Mall - 2nd Flr, Mombasa Rd, Nairobi</li>
+            <li>Westlands: Sarit Centre - Ground Flr, Karuna Rd, Nairobi</li>
           </ul>
         </div>
       </div>

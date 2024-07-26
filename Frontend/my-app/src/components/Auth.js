@@ -1,3 +1,4 @@
+// src/components/Auth.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -38,7 +39,7 @@ const Auth = () => {
   const handleLogout = () => {
     logout();
     dispatch({ type: 'LOGOUT' });
-    navigate('/');
+    navigate('/homepage');
   };
 
   const switchMode = () => {

@@ -4,7 +4,7 @@ import { FaUser, FaBox, FaStore, FaInbox } from 'react-icons/fa';
 import axios from 'axios';
 import AccountDetails from './AccountDetails';
 import AddressBook from './AddressBook';
-import AddProductForm from './AddProductForm';
+import AddProductForm from './AddProductForm'; // Import the AddProductForm component
 import { UserContext } from '../contexts/UserContext';
 import '../styles.css';
 
@@ -20,7 +20,6 @@ const UserAccount = () => {
     address: '',
     description: ''
   });
-  const [shops, setShops] = useState([]);
   const [products, setProducts] = useState([]);
   const [showAddProductForm, setShowAddProductForm] = useState(false);
   const [selectedShopId, setSelectedShopId] = useState(null);
@@ -37,13 +36,6 @@ const UserAccount = () => {
         setAddresses(response.data.addresses);
         const defaultAddr = response.data.addresses.find(addr => addr.isDefault);
         setDefaultAddress(defaultAddr ? defaultAddr.address : '');
-
-        // Fetch shops for the user
-        const shopsResponse = await axios.get(`http://localhost:5000/api/users/${userId}/shops`, {
-          headers: { 'x-auth-token': token }
-        });
-        setShops(shopsResponse.data);
-
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -82,10 +74,6 @@ const UserAccount = () => {
     } catch (error) {
       console.error('Error updating default address:', error);
     }
-  };
-
-  const handleShopChange = (e) => {
-    setSelectedShopId(e.target.value);
   };
 
   const handleAddOrUpdateAddress = async (address, isDefault) => {
@@ -129,7 +117,8 @@ const UserAccount = () => {
     }
   };
 
-  const handleAddProductClick = () => {
+  const handleAddProductClick = (shopId) => {
+    setSelectedShopId(shopId); // Set the ID of the shop for which to add products
     setShowAddProductForm(true); // Show the Add Product form
   };
 
@@ -206,16 +195,10 @@ const UserAccount = () => {
               ))}
               <tr>
                 <td colSpan="5">
-                  <select onChange={handleShopChange} value={selectedShopId || ''}>
-                    <option value="" disabled>Select a shop</option>
-                    {shops.map(shop => (
-                      <option key={shop._id} value={shop._id}>{shop.name}</option>
-                    ))}
-                  </select>
-                  <button onClick={handleAddProductClick} disabled={!selectedShopId}>
+                  <button onClick={() => handleAddProductClick(user.shops[0]._id)}>
                     Add Product
                   </button>
-                    </td>
+                </td>
               </tr>
             </tbody>
           </table>

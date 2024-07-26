@@ -1,9 +1,10 @@
+// src/hooks/useAuth.js
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
 const useAuth = () => {
-  const { token, setToken } = useContext(AuthContext);
-  return { token, setToken };
+  const { state, dispatch } = useContext(AuthContext);
+  return { state, dispatch };
 };
 
 export default useAuth;
