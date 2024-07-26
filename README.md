@@ -55,7 +55,7 @@ Shops can manage their products, track orders, and view sales analytics.
 1. **Clone the Repository**
 
     ```bash
-    git clone https://github.com/yourusername/the-gift-shop.git
+    git clone https://github.com/Stephanie514/the-gift-shop.git
     cd the-gift-shop
     ```
 
@@ -127,11 +127,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Project Maintainer**: Stephanie Chepkirui
 - **Email**: chepkiruistephanie514@gmail.com
-- **GitHub**: [yourusername](https://github.com/Stephanie514)
+- **GitHub**: [Stephanie514](https://github.com/Stephanie514)
 
 - **Project Maintainer**: Fiona Nyadero
 - **Email**: fiona.nyadero@gmail.com
-- **GitHub**: [yourusername](https://github.com/Fiona-Nyadero)
+- **GitHub**: [Fiona-Nyadero](https://github.com/Fiona-Nyadero)
 
 
 

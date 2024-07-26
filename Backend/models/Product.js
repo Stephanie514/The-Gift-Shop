@@ -5,7 +5,8 @@ const { Schema } = mongoose; // Destructure Schema from mongoose
 // Schema for product reviews
 const reviewSchema = new Schema({
   user: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   rating: {
@@ -59,7 +60,7 @@ const productSchema = new Schema({
   },
   occasion: {
     type: [String],
-    default: ''
+    default: []
   },
   shop: {
     type: Schema.Types.ObjectId,

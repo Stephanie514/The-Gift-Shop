@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
   cart: {
     type: [
       {
-        product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' }, // Assuming you have a Product model
+        product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' }, // Link to Product model
         quantity: { type: Number, default: 1 }
       }
     ],
@@ -44,7 +44,7 @@ const UserSchema = new mongoose.Schema({
   },
   shops: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shop'
+    ref: 'Shop' // Shops owned by the user
   }]
 });
 

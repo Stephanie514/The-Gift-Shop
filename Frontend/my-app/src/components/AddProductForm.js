@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddProductForm = ({ shopId }) => {
+const AddProductForm = ({ shopId, onClose }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -43,6 +43,7 @@ const AddProductForm = ({ shopId }) => {
 
       console.log('Product added:', response.data);
       // Optionally clear the form or redirect
+      if (onClose) onClose();
     } catch (error) {
       setError(`Error adding product: ${error.response?.data?.message || error.message}`);
       console.error('Error adding product:', error);
@@ -88,7 +89,7 @@ const AddProductForm = ({ shopId }) => {
         <input type="number" value={stock} onChange={(e) => setStock(e.target.value)} required />
       </div>
       <button type="submit">Add Product</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color:  'red' }}>{error}</p>}
     </form>
   );
 };

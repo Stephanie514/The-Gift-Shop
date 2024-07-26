@@ -1,24 +1,33 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const shopSchema = new Schema({
+const shopSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
+  address: {
+    type: String,
+    required: false
+  },
   description: {
     type: String,
-    required: true
+    required: false
   },
   owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to the User model
     required: true
   },
-  products: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
-  }]
-}, { timestamps: true });
+  orders: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order'
+  }], // Link to orders associated with this shop
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-module.exports = mongoose.model('Shop', shopSchema);
+const Shop = mongoose.model('Shop', shopSchema);
+
+module.exports = Shop;

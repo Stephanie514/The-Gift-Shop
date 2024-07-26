@@ -39,7 +39,7 @@ const UserAccount = () => {
         setDefaultAddress(defaultAddr ? defaultAddr.address : '');
 
         // Fetch shops for the user
-        const shopsResponse = await axios.get(`http://localhost:5000/api/users/${userId}/shops`, {
+        const shopsResponse = await axios.get(`http://localhost:5000/api/shops/user`, {
           headers: { 'x-auth-token': token }
         });
         setShops(shopsResponse.data);
@@ -57,7 +57,7 @@ const UserAccount = () => {
       if (activeTab === 'My Shops' && selectedShopId) {
         try {
           const token = localStorage.getItem('token');
-          const response = await axios.get(`http://localhost:5000/api/products/shop/${selectedShopId}`, {
+          const response = await axios.get(`http://localhost:5000/api/shop/${selectedShopId}/products`, {
             headers: { 'x-auth-token': token }
           });
           setProducts(response.data);
@@ -86,6 +86,20 @@ const UserAccount = () => {
 
   const handleShopChange = (e) => {
     setSelectedShopId(e.target.value);
+  };
+
+  const fetchProducts = async () => {
+    if (activeTab === 'My Shops' && selectedShopId) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`http://localhost:5000/api/shops/${selectedShopId}/products`, {
+          headers: { 'x-auth-token': token }
+        });
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
   };
 
   const handleAddOrUpdateAddress = async (address, isDefault) => {
@@ -131,6 +145,11 @@ const UserAccount = () => {
 
   const handleAddProductClick = () => {
     setShowAddProductForm(true); // Show the Add Product form
+  };
+
+  const handleProductAdded = () => {
+    // Refresh the products for the selected shop
+    fetchProducts();
   };
 
   const renderMyShopContent = () => {
@@ -179,7 +198,10 @@ const UserAccount = () => {
         {showAddProductForm && (
           <AddProductForm
             shopId={selectedShopId}
-            onClose={() => setShowAddProductForm(false)}
+            onClose={() => {
+              setShowAddProductForm(false);
+              handleProductAdded();
+            }}
           />
         )}
         <div className="products-table-container">
@@ -215,14 +237,14 @@ const UserAccount = () => {
                   <button onClick={handleAddProductClick} disabled={!selectedShopId}>
                     Add Product
                   </button>
-                    </td>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     );
-  };
+  };  
 
   const renderContent = () => {
     switch (activeTab) {
