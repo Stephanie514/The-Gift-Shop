@@ -52,11 +52,6 @@ const HomePage = () => {
             categories.slice(0, 3).map((category) => (
               <div className="category-card" key={category}>
                 <a href={`/products/category/${category}`}>
-                  <img
-                    src={`path/to/icons/${category.toLowerCase()}.png`} // Replace with actual path to category icons
-                    alt={category}
-                    className="category-icon"
-                  />
                   <h3>{category}</h3>
                 </a>
               </div>
@@ -73,10 +68,10 @@ const HomePage = () => {
         </div>
         <div className="newArrivals-images">
           <div className="newArrivals-image-small">
-            <img src="path/to/small-image.jpg" alt="New Arrival Small" />
+            <img src="https://i.etsystatic.com/24021242/r/il/f12b24/2474425980/il_1588xN.2474425980_k33s.jpg" alt="New Arrival Small" />
           </div>
           <div className="newArrivals-image-large">
-            <img src="path/to/large-image.jpg" alt="New Arrival Large" />
+            <img src="https://i.etsystatic.com/16595770/r/il/114a9b/6081603444/il_1588xN.6081603444_d4c7.jpg" alt="New Arrival Large" />
           </div>
         </div>
       </div>
@@ -84,10 +79,10 @@ const HomePage = () => {
       <div className="mostWanted-section">
         <div className="mostWanted-images">
           <div className="mostWanted-image-small">
-            <img src="path/to/small-image.jpg" alt="Most Wanted Small" />
+            <img src="https://i.etsystatic.com/45650150/r/il/ea4d62/5207046294/il_1588xN.5207046294_juhd.jpg" alt="Most Wanted Small" />
           </div>
           <div className="mostWanted-image-large">
-            <img src="path/to/large-image.jpg" alt="Most Wanted Large" />
+            <img src="https://i.etsystatic.com/12718913/r/il/4e23f0/2453252763/il_1588xN.2453252763_ao0g.jpg" alt="Most Wanted Large" />
           </div>
         </div>
         <div className="mostWanted-text">
@@ -105,10 +100,10 @@ const HomePage = () => {
         </div>
         <div className="bestSellers-images">
           <div className="bestSellers-image-small">
-            <img src="path/to/small-image.jpg" alt="Best Seller Small" />
+            <img src="https://i.etsystatic.com/24925695/r/il/c7080a/5159071700/il_1588xN.5159071700_qkr6.jpg" alt="Best Seller Small" />
           </div>
           <div className="bestSellers-image-large">
-            <img src="path/to/large-image.jpg" alt="Best Seller Large" />
+            <img src="https://i.etsystatic.com/26623167/r/il/9514eb/6051308479/il_1588xN.6051308479_v8qa.jpg" alt="Best Seller Large" />
           </div>
         </div>
       </div>

@@ -10,7 +10,6 @@ const Hero = () => {
       <div className="hero-content">
         <div className="hero-text">
           <FaGift size={120} color="#662549" className="icon" />
-          <img src="../assets/giftshop.png" alt="Gift Shop Logo" className="logo" />
           <h1>Welcome to The Gift Shop</h1>
           <p>Find the perfect gift for your loved ones.</p>
         </div>
