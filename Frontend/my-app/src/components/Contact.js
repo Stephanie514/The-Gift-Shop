@@ -29,7 +29,7 @@ const Contact = () => {
     }
   };
 
-  return (
+  /* return (
     <div className="form-container">
       <h2>Contact Us</h2>
       <p>If you have any questions, please reach out to us using the information below.</p>
@@ -52,6 +52,58 @@ const Contact = () => {
       <p>Phone: +25492022972 +254715124162</p>
     </div>
   );
+};
+
+export default Contact; */
+
+return (
+  <div className="contact-container">
+    <h2 className="contact-heading">Contact Us</h2>
+    <p className="contact-description">
+      If you have any questions, please reach out to us using the information below.
+    </p>
+    <form onSubmit={handleSubmit} className="contact-form">
+      <div className="form-group">
+        <label htmlFor="name" className="form-label">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          className="form-input"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="email" className="form-label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          className="form-input"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="message" className="form-label">Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          className="form-textarea"
+          value={formData.message}
+          onChange={handleChange}
+          required
+        ></textarea>
+      </div>
+      <button type="submit" className="form-button">Send</button>
+    </form>
+    <p className="contact-email">Email: thegiftshop401@gmail.com</p>
+    <p className="contact-phone">Phone: +25492022972, +254715124162</p>
+  </div>
+);
 };
 
 export default Contact;
